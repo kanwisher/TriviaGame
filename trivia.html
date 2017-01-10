@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Trivia</title>
     <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" rel="stylesheet">
     <style>
    	* {
    		box-sizing: border-box;
@@ -23,26 +24,27 @@
 	
 
 
-   	body{
-   		margin: 0;
-        font-size: 30px;
+   	body{   		
+        font-size: 40px;
+        font-family: 'Yanone Kaffeesatz', sans-serif;
    		
    	}
     .content {
         width: 800px;
-        height: 740px;
+        height: 350px; /*animate to 700px*/
         background: #FFD90F; /* official Simpsons hex color! */
         margin: 0 auto;
         margin-top: 30px;
         overflow: auto;
+        box-shadow: 3px 3px 30px rgba(0, 0, 0, .6)
     }
     
     h1 {
         text-align: center;
         font-family: 'Rock Salt', cursive;
-        font-size: 55px;
+        font-size: 65px;
         color: white;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
+        text-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
         
     }
     
@@ -53,34 +55,60 @@
     }
     
     #start {
-        border: solid red 2px;
+        text-decoration: none;
+        padding: 15px;
+        font-size: 25px;
+        background: #E65120;
+        color: white;
+        border: none;
+        width: 125px;
+        transition: width .5s
+    }
+
+    #start:hover {
+        
+        cursor: pointer;
+        width: 200px;
     }
     
     #wrapper,
     #info-panel {
         margin: 0 auto;
-    }
-    
-    #wrapper {
+        width: 700px;
+        height: 350px;
         display: none;
-        background: yellow;
-        width: 400px;
-        height: 200px;
     }
-    
+
     #info-panel {
-        display: none;
-        background: yellow;
-        width: 400px;
-        height: 200px;
+        text-align: center;
     }
+
+    li {
+        list-style: none;
+    }
+
+    li:hover {
+        background-color: #A2232C; /* official Simpsons tongue color! */
+        color: white;
+        cursor: pointer;
+    }
+
+    #countdown {
+        padding: 10px;
+        border: solid;
+        float: right;
+    }
+    
+
     </style>
 </head>
 
 <body>
     <div class="content">
+        <header>
         <h1>Simpsons Trivia</h1>
-        <button id="start">START</button>
+        <button id="start">Start</button>
+        </header>
         <div id="wrapper">
             <p id="question"></p>
             <ul id="answers">
@@ -109,10 +137,10 @@
         new Question(2, "What are the names of Marge's sisters?", ["Patsy and Selina", "Patsy and Selma", "Patty and Selma", "Patty and Selina"], "2"),
         new Question(3, "What town do the Simpsons live in?", ["Cleveland", "Springfield", "Springview", "none of the above"], "1"),
         new Question(4, "What is the name of Mr. Burns' right hand man?", ["Chief Wiggum", "Moe Szyslak", "Troy McClure", "Waylon Smithers"], "3"),
-        new Question(5, "Which is NOT a Bart Simpson catchphrase?", ["Eat My Shorts!", "Don't Have a Cow, Man!", "I did it!", "Ay Caramba!"], "2"),
+        new Question(5, "Which is NOT a Bart Simpson catchphrase?", ["'Eat My Shorts!'", "'Don't Have a Cow, Man!'", "'I did it!'", "'Ay Caramba!'"], "2"),
         new Question(6, "What was Maggie's first word?", ["Mamma", "Bart", "Lisa", "Daddy"], "3"),
         new Question(7, "What is the name of the school bully?", ["Nelson", "Bob", "Martin", "none of the above"], "0"),
-        new Question(8, "What is the name of the groundsman at the school?", ["Billy", "Willie", "Wallie", "Jocky"], "1"),
+        new Question(8, "What is the name of the groundskeeper at the school?", ["Billy", "Willie", "Wallie", "Jocky"], "1"),
         new Question(9, "What is the name of the shop owned by Apu?", ["7-Eleven", "Dash-E-Mart", "Fast-E-Mart", "Kwik-E-Mart"], "3"),
         new Question(10, "Finally, what are the names of Homer's two colleagues from Sector 7G?", ["Carl and Lenny", "Skinner and Krabappel", "Moe and Barney", "Wiggum and Abe"], "0"),
     ]
@@ -148,11 +176,22 @@
 
             function timer() {
                 count--;
+                $("#countdown").css("background","#70D1FF");
+                $("#countdown").css("color","");
+
+                        
                 if (timerStop === true) {
                     clearInterval(counter);
                     return;
 
-                } else if (count <= 0) {
+                }else if(count <= 5 && count > 0){
+                    $("#countdown").css({
+                        background: 'red',
+                        color: 'white'
+                    });
+                }
+
+                else if (count <= 0) {
                     clearInterval(counter);
                     timeUp();
                     return;
@@ -167,6 +206,7 @@
             quesNumCounter = 0;
             $(this).hide();
             $("#info-panel").hide();
+            $(".content").css("height", "700px")
             $wrapper.show();
             generateQuestion(quesNumCounter);
             startTimer();
@@ -217,31 +257,31 @@
         function winScreen(indexNum, correct) {
             $wrapper.hide();
             if (correct) {
-                $("#info-panel").html("<h2> Your answer of " + questionBank[quesNumCounter].answerChoices[indexNum] + " is correct")
+                $("#info-panel").html("<p> Your answer of " + questionBank[quesNumCounter].answerChoices[indexNum] + " was correct")
                 correctGuess++;
 
             } else {
                 var indexShort = questionBank[quesNumCounter].answerIndex
-                $("#info-panel").html("<h2> Your answer of " + questionBank[quesNumCounter].answerChoices[indexNum] + " is wrong</h2><h2> The correct answer is " + questionBank[quesNumCounter].answerChoices[indexShort] + "<h2>")
+                $("#info-panel").html("<p> Your answer of " + questionBank[quesNumCounter].answerChoices[indexNum] + " was wrong</p><p> The correct answer was " + questionBank[quesNumCounter].answerChoices[indexShort] + "<p>")
                 incorrectGuess++;
             }
             $("#info-panel").show();
-            setTimeout(nextQuestion, 2000);
+            setTimeout(nextQuestion, 4000);
         }
 
         function timeUp() {
             $wrapper.hide();
             var indexShort = questionBank[quesNumCounter].answerIndex
-            $("#info-panel").html("<h2>Time has run out!<h2><h2> The correct answer is " + questionBank[quesNumCounter].answerChoices[indexShort] + "<h2>")
+            $("#info-panel").html("<p>Time has run out!<p><p> The correct answer was " + questionBank[quesNumCounter].answerChoices[indexShort] + "<p>")
             unansweredGuess++;
             $("#info-panel").show();
-            setTimeout(nextQuestion, 2000);
+            setTimeout(nextQuestion, 4000);
         }
 
         function endScreen() {
-            $("#info-panel").html("<h2>Here are your results!<h2><h2>Correct: " + correctGuess + "</h2>" + "<h2>Incorrect: " + incorrectGuess + "</h2><h2>Unanswered: " + unansweredGuess + "</h2>")
+            $("#info-panel").html("<p>Here are your results!<p><p>Correct: " + correctGuess + "</p>" + "<p>Incorrect: " + incorrectGuess + "</p><p>Unanswered: " + unansweredGuess + "</p>")
             $start.show();
-            $start.text("Play Again");
+            $start.text("Again");
             $("#info-panel").show();
 
         }
