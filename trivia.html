@@ -4,21 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Trivia</title>
+    <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet">
     <style>
+   	* {
+   		box-sizing: border-box;
+   	}
+
+
+
+   	html { 
+	  background: url(assets/images/cloudbackground.jpg) no-repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+	}
+
+	
+
+
+   	body{
+   		margin: 0;
+        font-size: 30px;
+   		
+   	}
     .content {
-        width: 500px;
-        height: 500px;
-        background: orange;
+        width: 800px;
+        height: 740px;
+        background: #FFD90F; /* official Simpsons hex color! */
         margin: 0 auto;
+        margin-top: 30px;
+        overflow: auto;
     }
     
     h1 {
         text-align: center;
+        font-family: 'Rock Salt', cursive;
+        font-size: 55px;
+        color: white;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
+        
     }
     
     #start {
         display: block;
         margin: 0 auto;
+        margin-top: 10px;
     }
     
     #start {
@@ -48,13 +79,12 @@
 
 <body>
     <div class="content">
-        <h1>Trivia</h1>
+        <h1>Simpsons Trivia</h1>
         <button id="start">START</button>
         <div id="wrapper">
             <p id="question"></p>
             <ul id="answers">
             </ul>
-            <div id="next">NEXT</div>
             <div id="countdown"></div>
         </div>
         <!-- wrapper -->
@@ -63,6 +93,7 @@
     <!-- content -->
     <!--content-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script>
     //function that constructs my questions into objects//
 
@@ -74,9 +105,16 @@
     }
 
     var questionBank = [
-        new Question(1, "What is 2+2?", [4, 3, 15, "none of the above"], "0"),
-        new Question(2, "What is the word cat?", ["cat", 3, "dog", "none of the above"], "0"),
-        new Question(3, "Which is q?", [4, "v", "q", "none of the above"], "2"),
+        new Question(1, "What is Bart's full name?", ["Bartholomew", "Barticus", "Bartrum", "Barty"], "0"),
+        new Question(2, "What are the names of Marge's sisters?", ["Patsy and Selina", "Patsy and Selma", "Patty and Selma", "Patty and Selina"], "2"),
+        new Question(3, "What town do the Simpsons live in?", ["Cleveland", "Springfield", "Springview", "none of the above"], "1"),
+        new Question(4, "What is the name of Mr. Burns' right hand man?", ["Chief Wiggum", "Moe Szyslak", "Troy McClure", "Waylon Smithers"], "3"),
+        new Question(5, "Which is NOT a Bart Simpson catchphrase?", ["Eat My Shorts!", "Don't Have a Cow, Man!", "I did it!", "Ay Caramba!"], "2"),
+        new Question(6, "What was Maggie's first word?", ["Mamma", "Bart", "Lisa", "Daddy"], "3"),
+        new Question(7, "What is the name of the school bully?", ["Nelson", "Bob", "Martin", "none of the above"], "0"),
+        new Question(8, "What is the name of the groundsman at the school?", ["Billy", "Willie", "Wallie", "Jocky"], "1"),
+        new Question(9, "What is the name of the shop owned by Apu?", ["7-Eleven", "Dash-E-Mart", "Fast-E-Mart", "Kwik-E-Mart"], "3"),
+        new Question(10, "Finally, what are the names of Homer's two colleagues from Sector 7G?", ["Carl and Lenny", "Skinner and Krabappel", "Moe and Barney", "Wiggum and Abe"], "0"),
     ]
 
     var quesNumCounter = 0;
@@ -84,6 +122,8 @@
 
     //shorthand for jquery document ready function//
     $(function() {
+
+    	 $(".content").effect("slide", "slow");
 
 
         var $wrapper = $("#wrapper");
