@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Trivia</title>
+    <style>
+	.content {
+		width: 500px;
+		height: 500px;
+		background: orange;
+		margin: 0 auto;
+
+	}
+
+	h1 {
+		text-align: center;
+	}
+
+	#start {
+		display: block;
+		margin: 0 auto;	
+
+	}
+
+	#start {
+		border: solid red 2px;
+		
+	}
+
+	#wrapper,#info-panel{
+		margin: 0 auto;
+	}
+    #wrapper {
+		
+        display: none;
+        background: yellow;
+        width: 400px;
+        height: 200px;
+    }
+    
+    #info-panel {
+    	
+        display: none;
+        background: yellow;
+        width: 400px;
+        height: 200px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h1>Trivia</h1>
+        <button id="start">START</button>
+        <div id="wrapper">
+            <p id="question"></p>
+            <ul id="answers">
+            </ul>
+            <div id="next">NEXT</div>
+            <div id="countdown"></div>
+        </div>
+        <!-- wrapper -->
+        <div id="info-panel">Hello!</div>
+    </div>
+    <!-- content -->
+    <!--content-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+
+
+    //function that constructs my questions into objects//
+
+    function Question(questionNumber, questionString, answerChoices, answerIndex) {
+        this.questionNumber = questionNumber;
+        this.questionString = questionString;
+        this.answerChoices = answerChoices;
+        this.answerIndex = answerIndex;
+    }
+
+    var questionBank = [
+        new Question(1, "What is 2+2?", [4, 3, 15, "none of the above"], "0"),
+        new Question(2, "What is the word cat?", ["cat", 3, "dog", "none of the above"], "0"),
+        new Question(3, "Which is q?", [4, "v", "q", "none of the above"], "2"),
+    ]
+
+    var quesNumCounter = 0;
+
+
+//shorthand for jquery document ready function//
+    $(function() {
+
+
+        var $wrapper = $("#wrapper");
+        var $start = $("#start");
+        var $question = $("#question");
+        var $next = $("#next");
+        var $answers = $("#answers");
+
+
+
+//countdown timer//
+
+        function startTimer(){
+	        var count = 16;
+	        timer();
+	       counter = setInterval(timer, 1000); //timer function will  run every 1 second
+
+	        function timer() {
+	            count--;
+	            if (count <= 0) {
+	                clearInterval(counter);
+	                timeUp();
+	                return;
+	            }
+
+	            $("#countdown").html("Timer: " + count)
+	        }
+	    }
+
+
+
+
+
+
+
+        $start.on("click", function() {
+            $(this).hide();
+            $wrapper.show();
+            generateQuestion(quesNumCounter);
+            startTimer();
+
+
+        });
+
+
+
+        $next.on("click", function() {
+            if (quesNumCounter >= questionBank.length) {
+                alert("gameover!");
+            } else {
+                quesNumCounter++
+                generateQuestion(quesNumCounter)
+
+            }
+        });
+
+        //matching the data attribute to our correct answer index
+        $answers.on("click", "li", function() {
+            var indexNum = $(this).attr("data-index");
+            if (indexNum === questionBank[quesNumCounter].answerIndex) {
+                winScreen(indexNum, true);
+            } else {
+                winScreen(indexNum, false);
+            }
+
+        });
+
+
+        //generates the questions and answers
+        function generateQuestion(quesNum, correct) {
+            var question = questionBank[quesNum]
+            $question.text(question.questionString)
+            $("li").remove();
+            for (i = 0; i < question.answerChoices.length; i++) {
+                $answers.append("<li data-index=" + "'" + i + "''>" + question.answerChoices[i] + "</li>")
+            }
+        }
+
+        //display if player is correct
+        function winScreen(indexNum, correct) {
+            $wrapper.hide();
+            if (correct) {
+                $("#info-panel").html("<h2> Your answer of " + questionBank[quesNumCounter].answerChoices[indexNum] + " is correct")
+         	
+            }else {
+            	var indexShort = questionBank[quesNumCounter].answerIndex
+                $("#info-panel").html("<h2> Your answer of " + questionBank[quesNumCounter].answerChoices[indexNum] + " is wrong</h2><h2> The correct answer is " +  questionBank[quesNumCounter].answerChoices[indexShort] + "<h2>")
+            }
+            $("#info-panel").show();
+        }
+
+        function timeUp(){
+        	$wrapper.hide();
+        	var indexShort = questionBank[quesNumCounter].answerIndex
+        	$("#info-panel").html("<h2>Time has run out!<h2><h2> The correct answer is " +  questionBank[quesNumCounter].answerChoices[indexShort] + "<h2>")
+        	$("#info-panel").show();
+        }
+
+
+    });
+
+
+
+
+
+
+    //or do i want to do this??//
+    </script>
+</body>
+
+</html>
+<!-- tips/ ideas
+
+
+
+change hide/show to display none!!!!
+
+.val() returns form values (aka radio buttons?)
+
+.hide()
+.show()
+
+turn jquery$ selectors into variables
+
+match my correct answer with index of answerChoices rather than a string/value match
+
+
+//timer stuff???//
+
+
+//pseudo code//
+
+Page loads and shows a title screen with a button
+
+when the button is clicked, the button hides/goes away and the first question is presented and the question timer begins
+
+if the timer runs out before the next button is clicked, the question is marked incorrect and the next question appears
+
+if The user clicks a radio button and clicks next before the timer runs out
+
+when next button is clicked it records the users input and checks it against the correct answer, a correct or incorrect counter is incremented
+it also checks if the question has been answered, RETURN if it has not been answered a text box apears telling the user to answer the question
+it also checks if it's the last question, if it's the last question it shows the correct and incorrect answers
+
+
+fiddle with jQuery selectors (page 302);
+
+$(function() {
+	//my crap here//
+});
+ -->
