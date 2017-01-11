@@ -141,7 +141,7 @@
                 incorrectGuess++;
             }
             $("#info-panel").show();
-            setTimeout(nextQuestion, 4000);
+            setTimeout(nextQuestion, 3500);
         }
 
         function timeUp() {
@@ -150,7 +150,7 @@
             $("#info-panel").html("<p>Time has run out!<p><p> The correct answer was " + questionBank[quesNumCounter].answerChoices[indexShort] + "<p>")
             unansweredGuess++;
             $("#info-panel").show();
-            setTimeout(nextQuestion, 4000);
+            setTimeout(nextQuestion, 3500);
         }
 
         function endScreen() {
