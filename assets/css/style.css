@@ -1,0 +1,87 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    background: url(../images/cloudbackground.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    font-size: 40px;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+.content {
+    width: 800px;
+    height: 350px;
+    /*animate to 700px*/
+    background: #FFD90F;
+    /* official Simpsons hex color! */
+    margin: 0 auto;
+    margin-top: 30px;
+    overflow: auto;
+    box-shadow: 3px 3px 30px rgba(0, 0, 0, .6)
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Rock Salt', cursive;
+    font-size: 65px;
+    color: white;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
+}
+
+#start {
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+#start {
+    text-decoration: none;
+    padding: 15px;
+    font-size: 25px;
+    background: #E65120;
+    color: white;
+    border: none;
+    width: 125px;
+    transition: width .5s
+}
+
+#start:hover {
+    cursor: pointer;
+    width: 200px;
+}
+
+#wrapper,
+#info-panel {
+    margin: 0 auto;
+    width: 700px;
+    height: 350px;
+    display: none;
+}
+
+#info-panel {
+    text-align: center;
+}
+
+li {
+    list-style: none;
+}
+
+li:hover {
+    background-color: #A2232C;
+    /* official Simpsons tongue color! */
+    color: white;
+    cursor: pointer;
+}
+
+#countdown {
+    padding: 10px;
+    border: solid;
+    float: right;
+}
