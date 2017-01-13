@@ -21,6 +21,7 @@
     ]
 
     var quesNumCounter = 0;
+    var randomNumber = Math.floor(Math.random() * 10) + 1
 
 
     //shorthand for jquery document ready function//
@@ -133,11 +134,13 @@
             $wrapper.hide();
             if (correct) {
                 $("#info-panel").html("<p> Your answer of " + questionBank[quesNumCounter].answerChoices[indexNum] + " was correct")
+                ajaxGiphy(questionBank[quesNumCounter].answerChoices[indexNum]);
                 correctGuess++;
 
             } else {
                 var indexShort = questionBank[quesNumCounter].answerIndex
                 $("#info-panel").html("<p> Your answer of " + questionBank[quesNumCounter].answerChoices[indexNum] + " was wrong</p><p> The correct answer was " + questionBank[quesNumCounter].answerChoices[indexShort] + "<p>")
+                ajaxGiphy(questionBank[quesNumCounter].answerChoices[indexShort]);
                 incorrectGuess++;
             }
             $("#info-panel").show();
@@ -149,6 +152,7 @@
             var indexShort = questionBank[quesNumCounter].answerIndex
             $("#info-panel").html("<p>Time has run out!<p><p> The correct answer was " + questionBank[quesNumCounter].answerChoices[indexShort] + "<p>")
             unansweredGuess++;
+            ajaxGiphy(questionBank[quesNumCounter].answerChoices[indexShort]);
             $("#info-panel").show();
             setTimeout(nextQuestion, 3500);
         }
@@ -161,7 +165,18 @@
 
         }
 
+        function ajaxGiphy(gifSearch){
+            $.ajax({
+                url: "https://api.giphy.com/v1/gifs/search?q=the+simpsons+" + gifSearch,
+                method: 'GET',
+                data: { api_key: "dc6zaTOxFJmzC"}
+                }).done(function(data) {
+                 return $("#info-panel").append("<img src='" + data.data[randomNumber].images.downsized_medium.url + "' height='200'>")
+
+            });
+        }
 
     });
+
 
 
