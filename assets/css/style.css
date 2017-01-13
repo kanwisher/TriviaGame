@@ -16,15 +16,16 @@ body {
 }
 
 .content {
+
     width: 800px;
     height: 350px;
     /*expand to 700px*/
-    background: #FFD90F;
-    /* official Simpsons hex color! */
+    background: #FFD90F;/* official Simpsons hex color! */
+
     margin: 0 auto;
     margin-top: 30px;
     overflow: auto;
-    box-shadow: 3px 3px 30px rgba(0, 0, 0, .6)
+    box-shadow: 3px 3px 30px rgba(0, 0, 0, .6);
 }
 
 h1 {
@@ -86,4 +87,9 @@ li:hover {
     padding: 10px;
     border: solid;
     float: right;
+}
+
+.giphyPic {
+    height: 200px;
+    border: solid 2px black;
 }
